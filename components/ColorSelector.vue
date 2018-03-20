@@ -53,7 +53,10 @@ export default {
 			this.open = false;
 		},
 		changeGradient (value) {
-			this.$store.commit('changeGradient', { index: this.index, color: value.hex });
+			const { r, g, b, a } = value.rgba;
+			const color = value.a < 1 ? `rgba(${r}, ${g}, ${b}, ${a})` : value.hex;
+			
+			this.$store.commit('changeGradient', { index: this.index, color });
 		}
 	}
 }
