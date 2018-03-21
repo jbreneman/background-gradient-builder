@@ -16,7 +16,8 @@
     "@nuxtjs/axios": "^5.0.0",
     "nuxt": "^1.0.0",
     "vue-click-outside": "^1.0.7",
-    "vue-color": "^2.4.5"
+    "vue-color": "^2.4.5",
+    "vue-select": "^2.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.1",
