@@ -1,5 +1,5 @@
 <template>
-	<span class="settings-button" v-click-outside="hidePopup">
+	<span class="settings-wrap" v-click-outside="hidePopup">
 		<span @click="togglePopup" class="settings-input">
 			<span class="settings-label" v-if="label">{{ label }}</span>
 			<slot name="settings"></slot>
@@ -40,13 +40,22 @@ export default {
 </script>
 
 <style scoped>
-.settings-button {
+.settings-wrap {
 	position: relative;
+	z-index: 2;
+	height: 100%;
+	padding: 1rem;
+	font-family: 'Montserrat', sans-serif;
+	font-size: .75rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	cursor: pointer;
 	display: flex;
 	transition: background-color .24s ease-out;
+	border: 1px solid #dddddd;
 }
 
-.settings-button:hover {
+.settings-wrap:hover {
 	background-color: #dddddd;
 }
 

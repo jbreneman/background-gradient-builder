@@ -5,7 +5,7 @@
 			<div class="settings" v-if="showSettings">
 				<div class="settings-content">
 					<settings-wrapper label="Blend Mode">
-						<span class="settings-name" slot="settings">{{ blendMode.selected}}</span>
+						<span class="settings-name" slot="settings">{{ blendMode.selected }}</span>
 						<ul class="settings-list" slot="options">
 							<li class="settings-item" v-for="mode in blendMode.options" :key="mode.value" @click="changeBlendMode(mode.value)" :class="{ 'selected': mode.value === blendMode.selected }">
 								{{ mode.text }}
@@ -13,8 +13,10 @@
 						</ul>
 					</settings-wrapper>
 					
-					<button class="copy">
-						Copy CSS
+					<button class="copy"
+						v-clipboard:copy="css"
+						v-clipboard:success="onCopy">
+						{{ copyButton }}
 					</button>
 				</div>
 				<button class="settings-button">
@@ -32,6 +34,10 @@
 import { mapState } from 'vuex';
 import ColorSelector from './ColorSelector';
 import SettingsWrapper from './SettingsWrapper';
+import Vue from 'vue';
+import VueClipboard from 'vue-clipboard2';
+
+Vue.use(VueClipboard);
 
 export default {
 	components: {
@@ -40,14 +46,26 @@ export default {
 	},
 	data() {
 		return {
-			showSettings: false
+			showSettings: false,
+			copyButton: 'Copy CSS',
 		};
 	},
 	computed: mapState({
 		colors: state => state.colors,
-		blendMode: state => state.blendMode
+		blendMode: state => state.blendMode,
+		css(state) {
+			const { colors } = state;
+			return `background-image: radial-gradient(ellipse at 100% 100%, ${colors[1].color} 0%, transparent 50%), radial-gradient(ellipse at 70% 0, ${colors[2].color} 0%, transparent 50%), radial-gradient(ellipse at 30% 100%, ${colors[3].color} 0%, transparent 50%), radial-gradient(ellipse at 10% 0, ${colors[4].color} 0%, transparent 50%), linear-gradient(${colors[0].color}, ${colors[0].color}); background-blend-mode: ${state.blendMode.selected};`;
+		}
 	}),
 	methods: {
+		onCopy() {
+			this.copyButton = 'Copied!';
+
+			window.setTimeout(() => {
+				this.copyButton = 'Copy CSS';
+			}, 2000);
+		},
 		toggleSettings() {
 			this.showSettings = !this.showSettings;
 		},
@@ -86,6 +104,9 @@ export default {
 	font-weight: 800;
 	text-transform: uppercase;
 	cursor: pointer;
+	background-color: #222222;
+	color: white;
+	border: none;
 }
 
 .settings-content {
@@ -115,6 +136,20 @@ export default {
 
 .selected {
 	font-weight: 700;
+}
+
+.copy {
+	margin-left: auto;
+	transition: background-color .24s ease-out;
+	border: 1px solid #dddddd;
+	appearance: none;
+	background-color: white;
+	padding: 2rem;
+	cursor: pointer;
+}
+
+.copy:hover {
+	background-color: #dddddd;
 }
 
 .slide-in-enter-active, .slide-in-leave-active {
