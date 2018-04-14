@@ -1,74 +1,23 @@
 <template>
 	<section class="controls">
-		<ColorSelector v-for="(color, index) in colors" :index="index" :color="color.color" :label="color.label" :key="index" />
-		<transition name="slide-in">
-			<div class="settings" v-if="showSettings">
-				<div class="settings-content">
-					<settings-wrapper label="Blend Mode">
-						<span class="settings-name" slot="settings">{{ blendMode.selected }}</span>
-						<ul class="settings-list" slot="options">
-							<li class="settings-item" v-for="mode in blendMode.options" :key="mode.value" @click="changeBlendMode(mode.value)" :class="{ 'selected': mode.value === blendMode.selected }">
-								{{ mode.text }}
-							</li>
-						</ul>
-					</settings-wrapper>
-					
-					<button class="copy"
-						v-clipboard:copy="css"
-						v-clipboard:success="onCopy">
-						{{ copyButton }}
-					</button>
-				</div>
-				<button class="settings-button">
-					Settings
-				</button>
-			</div>
-		</transition>
-		<button class="settings-button" @click="toggleSettings">
-			Settings
-		</button>
+		<div class="settings">
+			<ColorSelector v-for="(color, index) in colors" :index="index" :color="color.color" :label="color.label" :key="index" />
+		</div>
 	</section>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import ColorSelector from './ColorSelector';
-import SettingsWrapper from './SettingsWrapper';
-import Vue from 'vue';
-import VueClipboard from 'vue-clipboard2';
-
-Vue.use(VueClipboard);
 
 export default {
 	components: {
-		ColorSelector,
-		'settings-wrapper': SettingsWrapper,
-	},
-	data() {
-		return {
-			showSettings: false,
-			copyButton: 'Copy CSS',
-		};
+		ColorSelector
 	},
 	computed: mapState({
 		colors: state => state.colors,
-		blendMode: state => state.blendMode,
-		css(state) {
-			const { colors } = state;
-			return `background-image: radial-gradient(ellipse at 100% 100%, ${colors[1].color} 0%, transparent 50%), radial-gradient(ellipse at 70% 0, ${colors[2].color} 0%, transparent 50%), radial-gradient(ellipse at 30% 100%, ${colors[3].color} 0%, transparent 50%), radial-gradient(ellipse at 10% 0, ${colors[4].color} 0%, transparent 50%), linear-gradient(${colors[0].color}, ${colors[0].color}); background-blend-mode: ${state.blendMode.selected};`;
-		}
 	}),
 	methods: {
-		onCopy() {
-			this.copyButton = 'Copied!';
-
-			window.setTimeout(() => {
-				this.copyButton = 'Copy CSS';
-			}, 2000);
-		},
-		toggleSettings() {
-			this.showSettings = !this.showSettings;
-		},
 		changeBlendMode(value) {
 			this.$store.commit('setBlendMode', value);
 		}
@@ -82,16 +31,23 @@ export default {
 	width: 100%;
 	height: 80px;
 	display: flex;
-	box-shadow: 0 0 15px rgba(38, 13, 119, .1);
+	box-shadow: 0 0 5px rgba(38, 77, 119, .25), 0 0 15px rgba(38, 77, 119, .08);
 }
 
 .settings {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	background-color: white;
+}
+
+.settings-panel {
 	position: absolute;
 	z-index: 1;
 	width: 100%;
 	height: 100%;
 	display: flex;
-	background-color: white;
 }
 
 .settings-button {

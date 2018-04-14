@@ -51,6 +51,7 @@ html {
 	text-transform: uppercase;
 	color: #260D77;
 	text-shadow: 1px 1px 0 white, 2px 2px 0 #264d77, 3px 3px 0 #268d77, 4px 4px 0 #26cd77;
+	box-shadow: 0 0 5px rgba(38, 77, 119, .25), 0 0 15px rgba(38, 77, 119, .08);
 }
 
 .site-main {
