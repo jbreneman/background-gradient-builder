@@ -1,8 +1,6 @@
 <template>
 	<div class="layout">
-		<header class="site-header">
-			Background gradient builder
-		</header>
+		<SiteHeader />
 		<main class="site-main">
 			<nuxt/>
 		</main>
@@ -11,6 +9,14 @@
 		</footer>
 	</div>
 </template>
+
+<script>
+import SiteHeader from '../components/SiteHeader';
+
+export default {
+	components: { SiteHeader }
+}
+</script>
 
 <style>
 html {
@@ -37,21 +43,6 @@ html {
 	grid-template-areas: 
 		'header header header'
 		'main main main';
-}
-
-.site-header {
-	grid-area: header;
-	box-shadow: 0 0 15px rgba(38, 13, 119, .1);
-	border-bottom: 1px solid rgba(38, 13, 119, .1);
-	padding: 1rem;
-	display: flex;
-	align-items: center;
-	font-weight: 800;
-	font-size: 1.5rem;
-	text-transform: uppercase;
-	color: #260D77;
-	text-shadow: 1px 1px 0 white, 2px 2px 0 #264d77, 3px 3px 0 #268d77, 4px 4px 0 #26cd77;
-	box-shadow: 0 0 5px rgba(38, 77, 119, .25), 0 0 15px rgba(38, 77, 119, .08);
 }
 
 .site-main {

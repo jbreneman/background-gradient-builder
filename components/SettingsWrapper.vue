@@ -1,9 +1,9 @@
 <template>
 	<span class="settings-wrap" v-click-outside="hidePopup">
-		<span @click="togglePopup" class="settings-input">
+		<button @click.prevent="togglePopup" class="settings-input">
 			<span class="settings-label" v-if="label">{{ label }}</span>
 			<slot name="settings"></slot>
-		</span>
+		</button>
 		<span class="popup" v-show="open">
 			<slot name="options"></slot>
 		</span>
@@ -52,11 +52,11 @@ export default {
 	cursor: pointer;
 	display: flex;
 	transition: background-color .24s ease-out;
-	border: 1px solid #dddddd;
 }
 
 .settings-wrap:hover {
-	background-color: #dddddd;
+	background-color: rgba(0, 0, 0, .1);
+	cursor: pointer;
 }
 
 .settings-input {
@@ -68,6 +68,10 @@ export default {
 	text-transform: uppercase;
 	display: flex;
 	flex-direction: column;
+	appearance: none;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
 }
 
 .settings-label {
@@ -76,7 +80,7 @@ export default {
 
 .popup {
 	position: absolute;
-	bottom: 100%;
+	top: 100%;
 	right: 0;
 	width: 100%;
 	background-color: white;

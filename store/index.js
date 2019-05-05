@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 const createStore = () => {
 	return new Vuex.Store({
 		state: {
+			settings: false,
 			colors: [
 				{
 					color: '#268d77',
@@ -56,6 +57,9 @@ const createStore = () => {
 			},
 			setBlendMode (state, payload) {
 				state.blendMode.selected = payload;
+			},
+			toggleSettings (state) {
+				state.settings = !state.settings;
 			}
 		}
 	})
